@@ -1,11 +1,28 @@
 <template>
   <v-container>
+    <div>Test: {{ proficiencyBonus }}</div>
     <v-layout row>
       <v-flex xs1></v-flex>
       <v-flex xs10>
-        <div>Test: {{ proficiencyBonus }}</div>
-
-        <div>Name: {{ character.name }}</div>
+        <v-layout row align-content-center>
+          <v-layout column elevation-5 shrink>
+            <v-flex>
+              <v-img
+                :src="character.profilePicLink"
+                height="75"
+                width="75"
+                contain
+              ></v-img>
+            </v-flex>
+          </v-layout>
+          <v-layout column elevation-5 shrink>
+            <v-flex>
+              <h3>Name: {{ character.name }}</h3>
+              <h4>{{ race.name }} {{ baseClass.name }} {{ level }}</h4>
+              <h5>Level: {{ character.level }}</h5>
+            </v-flex>
+          </v-layout>
+        </v-layout>
 
         <div>
           <v-layout row wrap>
@@ -20,6 +37,8 @@
                 <li>Base Score: {{ score.baseScore }}</li>
                 <li>Racial Bonus: {{ score.racialBonus }}</li>
                 <li>Ability Improvements: {{ score.abilityImprovements }}</li>
+                <li>Misc Bonus: idk</li>
+                <li>Stacking Bonus: idk</li>
               </ul>
             </v-flex>
           </v-layout>
@@ -122,7 +141,11 @@ export default {
     return {
       character: {
         name: "Hop",
-        level: 8,
+        profilePicLink: "https://i.imgur.com/Xgp4a2Y.png",
+        baseClass: {
+          name: "Paladin",
+          levels: "10"
+        },
         abilityScores: {
           miscBonus: [0, 0, 0, 0, 0, 0],
           baseScores: [8, 10, 12, 13, 14, 15],
@@ -231,6 +254,10 @@ export default {
           speed: "25",
           abilityScoreBonus: [0, 2, 0, 0, 0, 0]
         }
+      },
+      baseClass: {
+        name: "Paladin",
+        level: 10
       },
       skillsList: [
         {
@@ -368,6 +395,9 @@ export default {
     },
     proficiencyBonus: function() {
       return 1 + Math.ceil(this.character.level / 4);
+    },
+    level: function() {
+      return Number(this.character.baseClass.levels);
     }
   }
 };
