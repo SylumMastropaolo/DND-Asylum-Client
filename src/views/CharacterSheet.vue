@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container grid-list-md>
     <v-layout row
       ><!-- Row 1 -->
       <v-flex shrink>
@@ -16,27 +16,23 @@
         <h5>Level: {{ character.level }}</h5>
       </v-flex>
     </v-layout>
-    <v-layout row
+    <v-layout row wrap
       ><!-- Row 2 -->
-      <div>
-        <v-layout row wrap>
-          <v-flex xs12 tag="h2">
-            Ability Scores
-          </v-flex>
-          <v-flex xs2 v-for="score in abilityScores" v-bind:key="score.name">
-            {{ score.name }}
-            <ul>
-              <li>Total: {{ score.total }}</li>
-              <li>Mod: {{ score.mod }}</li>
-              <li>Base Score: {{ score.baseScore }}</li>
-              <li>Racial Bonus: {{ score.racialBonus }}</li>
-              <li>Ability Improvements: {{ score.abilityImprovements }}</li>
-              <li>Misc Bonus: idk</li>
-              <li>Stacking Bonus: idk</li>
-            </ul>
-          </v-flex>
-        </v-layout>
-      </div>
+      <v-flex xs12 tag="h2">
+        Ability Scores
+      </v-flex>
+      <v-flex xs2 v-for="score in abilityScores" v-bind:key="score.name">
+        {{ score.name }}
+        <ul>
+          <li>Total: {{ score.total }}</li>
+          <li>Mod: {{ score.mod }}</li>
+          <li>Base Score: {{ score.baseScore }}</li>
+          <li>Racial Bonus: {{ score.racialBonus }}</li>
+          <li>Ability Improvements: {{ score.abilityImprovements }}</li>
+          <li>Misc Bonus: idk</li>
+          <li>Stacking Bonus: idk</li>
+        </ul>
+      </v-flex>
     </v-layout>
     <v-layout row
       ><!-- Row 3 -->
@@ -125,6 +121,37 @@
               </ul>
             </div>
           </div>
+        </v-layout>
+      </v-flex>
+      <v-flex xs3>
+        <v-layout column>
+          <h2>Skills</h2>
+          <ul>
+            <li v-for="skill in skills" v-bind:key="skill.name">
+              {{ skill.name }}
+              <ul>
+                <li>
+                  {{ skill.stat }}
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </v-layout>
+      </v-flex>
+      <v-flex xs6>
+        <v-layout row wrap>
+          <v-flex xs3>
+            Initiative
+          </v-flex>
+          <v-flex xs3>
+            Armor Class
+          </v-flex>
+          <v-flex xs6>
+            Deffenses and Conditions
+          </v-flex>
+          <v-flex xs12>
+            Big thingy where all actions and spells and stuff go
+          </v-flex>
         </v-layout>
       </v-flex>
     </v-layout>
@@ -391,6 +418,14 @@ export default {
         scores.push(score);
       }
       return scores;
+    },
+    skills: function() {
+      var skills = [];
+      for (var i = 0; i < this.skillsList.length; i++) {
+        var skill = this.skillsList[i];
+        skills.push(skill);
+      }
+      return skills;
     },
     proficiencyBonus: function() {
       return 1 + Math.ceil(this.character.level / 4);
