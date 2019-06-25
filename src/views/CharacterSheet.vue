@@ -1,133 +1,132 @@
 <template>
   <v-container>
-    <div>Test: {{ proficiencyBonus }}</div>
-    <v-layout row>
-      <v-flex xs1></v-flex>
-      <v-flex xs10>
-        <v-layout row align-content-center>
-          <v-layout column elevation-5 shrink>
-            <v-flex>
-              <v-img
-                :src="character.profilePicLink"
-                height="75"
-                width="75"
-                contain
-              ></v-img>
-            </v-flex>
-          </v-layout>
-          <v-layout column elevation-5 shrink>
-            <v-flex>
-              <h3>Name: {{ character.name }}</h3>
-              <h4>{{ race.name }} {{ baseClass.name }} {{ level }}</h4>
-              <h5>Level: {{ character.level }}</h5>
-            </v-flex>
-          </v-layout>
-        </v-layout>
-
-        <div>
-          <v-layout row wrap>
-            <v-flex xs12 offset-1 tag="h2">
-              Ability Scores
-            </v-flex>
-            <v-flex xs2 v-for="score in abilityScores" v-bind:key="score.name">
-              {{ score.name }}
-              <ul>
-                <li>Total: {{ score.total }}</li>
-                <li>Mod: {{ score.mod }}</li>
-                <li>Base Score: {{ score.baseScore }}</li>
-                <li>Racial Bonus: {{ score.racialBonus }}</li>
-                <li>Ability Improvements: {{ score.abilityImprovements }}</li>
-                <li>Misc Bonus: idk</li>
-                <li>Stacking Bonus: idk</li>
-              </ul>
-            </v-flex>
-          </v-layout>
-        </div>
-
-        <div>
-          <h2>
-            Saving Throws
-          </h2>
-          <v-layout col>
-            <v-flex
-              v-for="save in character.savingThrows.saves"
-              v-bind:key="save.name"
-            >
-              {{ save.name }}
-              <ul>
-                <li>Save Proficiency: {{ save.proficiencyLevel }}</li>
-                <li>Save Override: {{ save.override }}</li>
-                <li>Save Magic Bonus: {{ save.magicBonus }}</li>
-                <li>Save Misc Bonus: {{ save.miscBonus }}</li>
-              </ul>
-            </v-flex>
-          </v-layout>
-        </div>
-
-        <div>
-          <h1>Proficiencies And Languages</h1>
-        </div>
-
-        <div>
-          <h2>
-            Armor Proficiencies
-          </h2>
-          <div
-            v-for="armor in character.ProficienciesAndLanguages
-              .armorProficiencies"
-            v-bind:key="armor.name"
-          >
-            <ul>
-              <li>{{ armor.name }}</li>
-            </ul>
-          </div>
-        </div>
-
-        <div>
-          <h2>
-            Weapon Proficiencies
-          </h2>
-          <div
-            v-for="weapon in character.ProficienciesAndLanguages
-              .weaponProficiencies"
-            v-bind:key="weapon.name"
-          >
-            <ul>
-              <li>{{ weapon.name }}</li>
-            </ul>
-          </div>
-        </div>
-
-        <div>
-          <h2>
-            Tool Proficiencies
-          </h2>
-          <div
-            v-for="tool in character.ProficienciesAndLanguages
-              .toolProficiencies"
-            v-bind:key="tool.name"
-          >
-            <ul>
-              <li>{{ tool.name }}</li>
-            </ul>
-          </div>
-        </div>
-
-        <div>
-          <h2>
-            Languages
-          </h2>
-          <div
-            v-for="language in character.ProficienciesAndLanguages.languages"
-            v-bind:key="language.name"
-          >
-            <ul>
-              <li>{{ language.name }}</li>
-            </ul>
-          </div>
-        </div>
+    <v-layout row
+      ><!-- Row 1 -->
+      <v-flex shrink>
+        <v-img
+          :src="character.profilePicLink"
+          height="75"
+          width="75"
+          contain
+        ></v-img>
       </v-flex>
-      <v-flex xs1></v-flex>
+      <v-flex>
+        <h3>Name: {{ character.name }}</h3>
+        <h4>{{ race.name }} {{ baseClass.name }} {{ level }}</h4>
+        <h5>Level: {{ character.level }}</h5>
+      </v-flex>
+    </v-layout>
+    <v-layout row
+      ><!-- Row 2 -->
+      <div>
+        <v-layout row wrap>
+          <v-flex xs12 tag="h2">
+            Ability Scores
+          </v-flex>
+          <v-flex xs2 v-for="score in abilityScores" v-bind:key="score.name">
+            {{ score.name }}
+            <ul>
+              <li>Total: {{ score.total }}</li>
+              <li>Mod: {{ score.mod }}</li>
+              <li>Base Score: {{ score.baseScore }}</li>
+              <li>Racial Bonus: {{ score.racialBonus }}</li>
+              <li>Ability Improvements: {{ score.abilityImprovements }}</li>
+              <li>Misc Bonus: idk</li>
+              <li>Stacking Bonus: idk</li>
+            </ul>
+          </v-flex>
+        </v-layout>
+      </div>
+    </v-layout>
+    <v-layout row
+      ><!-- Row 3 -->
+      <v-flex xs3>
+        <v-layout column>
+          <div>
+            <h2>
+              Saving Throws
+            </h2>
+            <v-layout row wrap>
+              <v-flex
+                xs4
+                v-for="save in character.savingThrows.saves"
+                v-bind:key="save.name"
+              >
+                {{ save.name }}
+                <ul>
+                  <li>Save Proficiency: {{ save.proficiencyLevel }}</li>
+                  <li>Save Override: {{ save.override }}</li>
+                  <li>Save Magic Bonus: {{ save.magicBonus }}</li>
+                  <li>Save Misc Bonus: {{ save.miscBonus }}</li>
+                </ul>
+              </v-flex>
+            </v-layout>
+          </div>
+
+          <div>
+            <h1>Proficiencies And Languages</h1>
+          </div>
+
+          <div>
+            <h2>
+              Armor Proficiencies
+            </h2>
+            <div
+              v-for="armor in character.ProficienciesAndLanguages
+                .armorProficiencies"
+              v-bind:key="armor.name"
+            >
+              <ul>
+                <li>{{ armor.name }}</li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <h2>
+              Weapon Proficiencies
+            </h2>
+            <div
+              v-for="weapon in character.ProficienciesAndLanguages
+                .weaponProficiencies"
+              v-bind:key="weapon.name"
+            >
+              <ul>
+                <li>{{ weapon.name }}</li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <h2>
+              Tool Proficiencies
+            </h2>
+            <div
+              v-for="tool in character.ProficienciesAndLanguages
+                .toolProficiencies"
+              v-bind:key="tool.name"
+            >
+              <ul>
+                <li>{{ tool.name }}</li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <h2>
+              Languages
+            </h2>
+            <div
+              v-for="language in character.ProficienciesAndLanguages.languages"
+              v-bind:key="language.name"
+            >
+              <ul>
+                <li>{{ language.name }}</li>
+              </ul>
+            </div>
+          </div>
+        </v-layout>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
