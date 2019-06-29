@@ -21,7 +21,7 @@
       <v-flex xs12 tag="h2">
         Ability Scores
       </v-flex>
-      <v-flex xs2 v-for="score in abilityScores" v-bind:key="score.name">
+      <v-flex xs1 v-for="score in abilityScores" v-bind:key="score.name">
         {{ score.name }}
         <ul>
           <li>Total: {{ score.total }}</li>
@@ -35,6 +35,21 @@
           <li>Other Modifier: {{ score.otherModifier }}</li>
           <li>Override Score: {{ score.overrideScore }}</li>
         </ul>
+      </v-flex>
+      <v-flex xs1>
+        <h3>Proficiency Bonus: {{ proficiencyBonus }}</h3>
+      </v-flex>
+      <v-flex xs1>
+        <h3>Speed: {{ speed }}</h3>
+      </v-flex>
+      <v-flex xs1>
+        <h3>Inspiration: {{ this.character.inspiration }}</h3>
+      </v-flex>
+      <v-flex xs3>
+        <h3>
+          Hit Points: {{ this.character.hitPoints.currentHitPoints }} /
+          {{ this.character.hitPoints.maximumHitPoints }}
+        </h3>
       </v-flex>
     </v-layout>
     <v-layout row
@@ -147,13 +162,13 @@
       <v-flex xs6>
         <v-layout row wrap>
           <v-flex xs3>
-            Initiative
+            <h3>Initiative: {{ initiative }}</h3>
           </v-flex>
           <v-flex xs3>
-            Armor Class
+            <h3>Armor Class: {{ armorClass }}</h3>
           </v-flex>
           <v-flex xs6>
-            Deffenses and Conditions
+            Defenses and Conditions
           </v-flex>
           <v-flex xs12>
             Big thingy where all actions and spells and stuff go
@@ -176,8 +191,13 @@ export default {
         profilePicLink: "https://i.imgur.com/Xgp4a2Y.png",
         baseClass: {
           name: "Paladin",
-          levels: "10"
+          levels: 10
         },
+        hitPoints: {
+          currentHitPoints: 49,
+          maximumHitPoints: 74
+        },
+        inspiration: true,
         abilityScores: {
           miscBonus: [0, 0, 0, 0, 0, 0],
           baseScores: [8, 10, 12, 13, 14, 15],
@@ -574,10 +594,33 @@ export default {
       return skills;
     },
     proficiencyBonus: function() {
-      return 1 + Math.ceil(this.character.level / 4);
+      return 1 + Math.ceil(this.levelTotal / 4);
     },
-    level: function() {
+    levelTotal: function() {
+      // Will add total levels from all class levels
+      // Becomes useful when multiclassing
       return Number(this.character.baseClass.levels);
+    },
+    speed: function() {
+      // Needs to account for class features, status effects, etc.
+      return this.race.data.speed;
+    },
+    initiative: function() {
+      return this.dexterity.mod;
+    },
+    armorClass: function() {
+      return 10 + this.dexterity.mod;
+      // Examples to consider during development
+      //
+      // No Armour: Base AC = 10 + Dexterity modifier
+      // Leather Armour: Base AC = 11 + Dexterity modifier
+      // Chain Shirt: Base AC = 13 + Dexterity modifier (max +2)
+      // Plate Mail: Base AC = 18
+      // Mage Armour spell: Base AC = 13 + Dexterity modifier
+      // Barbarian Unarmoured Defense
+      // ability: Base AC = 10 + Dexterity modifier + Constitution modifier
+      // Monk Unarmoured Defense ability: Base AC = 10 + Dexterity modifier + Wisdom modifier
+      // Sorcerer Draconic Resilience ability: Base AC = 13 + Dexterity modifier
     }
   }
 };
