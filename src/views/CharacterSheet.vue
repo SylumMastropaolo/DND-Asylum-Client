@@ -181,14 +181,19 @@
             Defenses and Conditions
           </v-flex>
           <v-flex xs12>
-            Big thingy where all actions and spells and stuff go
-
-            <h1>
+            <v-tabs v-model="activeTab">
+              <v-tab v-for="tab in tabs" v-bind:key="tab"> {{ tab }}</v-tab>
+              <v-tabs-items>
+                <v-tab-item><v-card>Actions</v-card></v-tab-item>
+                <v-tab-item><v-card>Spells</v-card></v-tab-item>
+                <v-tab-item><v-card>Equipment</v-card></v-tab-item>
+                <v-tab-item><v-card><h1>
               Features and Traits
             </h1>
             <h2>
               Racial Traits
             </h2>
+            <v-divider></v-divider>
             <div v-for="feature in race.features" v-bind:key="feature.name">
               <h3>{{ feature.name }}</h3>
               {{ feature.description }}
@@ -196,7 +201,12 @@
             <div v-for="feature in subRace.features" v-bind:key="feature.name">
               <h3>{{ feature.name }}</h3>
               {{ feature.description }}
-            </div>
+            </div></v-card></v-tab-item>
+                <v-tab-item><v-card>Description</v-card></v-tab-item>
+                <v-tab-item><v-card>Notes</v-card></v-tab-item>
+                <v-tab-item><v-card>Extras</v-card></v-tab-item>
+              </v-tabs-items>
+            </v-tabs>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -223,7 +233,17 @@ export default {
         name: "Paladin",
         level: 10
       },
-      skillsList: skillsImport
+      skillsList: skillsImport,
+      activeTab: 3,
+      tabs: [
+        "Actions",
+        "Spells",
+        "Equipment",
+        "Features & Traits",
+        "Description",
+        "Notes",
+        "Extras"
+      ]
     };
   },
   methods: {
