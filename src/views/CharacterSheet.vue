@@ -184,27 +184,49 @@
             <v-tabs v-model="activeTab">
               <v-tab v-for="tab in tabs" v-bind:key="tab"> {{ tab }}</v-tab>
               <v-tabs-items>
-                <v-tab-item><v-card>Actions</v-card></v-tab-item>
-                <v-tab-item><v-card>Spells</v-card></v-tab-item>
-                <v-tab-item><v-card>Equipment</v-card></v-tab-item>
-                <v-tab-item><v-card><h1>
-              Features and Traits
-            </h1>
-            <h2>
-              Racial Traits
-            </h2>
-            <v-divider></v-divider>
-            <div v-for="feature in race.features" v-bind:key="feature.name">
-              <h3>{{ feature.name }}</h3>
-              {{ feature.description }}
-            </div>
-            <div v-for="feature in subRace.features" v-bind:key="feature.name">
-              <h3>{{ feature.name }}</h3>
-              {{ feature.description }}
-            </div></v-card></v-tab-item>
-                <v-tab-item><v-card>Description</v-card></v-tab-item>
-                <v-tab-item><v-card>Notes</v-card></v-tab-item>
-                <v-tab-item><v-card>Extras</v-card></v-tab-item>
+                <v-tab-item>
+                  <v-card>Actions</v-card>
+                </v-tab-item>
+                <v-tab-item>
+                  <v-card>Spells</v-card>
+                </v-tab-item>
+                <v-tab-item>
+                  <v-card>Equipment</v-card>
+                </v-tab-item>
+                <v-tab-item>
+                  <v-card>
+                    <h1>
+                      Features and Traits
+                    </h1>
+                    <h2>
+                      Racial Traits
+                    </h2>
+                    <v-divider></v-divider>
+                    <div
+                      v-for="feature in race.features"
+                      v-bind:key="feature.name"
+                    >
+                      <h3>{{ feature.name }}</h3>
+                      {{ feature.description }}
+                    </div>
+                    <div
+                      v-for="feature in subRace.features"
+                      v-bind:key="feature.name"
+                    >
+                      <h3>{{ feature.name }}</h3>
+                      {{ feature.description }}
+                    </div>
+                  </v-card>
+                </v-tab-item>
+                <v-tab-item>
+                  <v-card>Description</v-card>
+                </v-tab-item>
+                <v-tab-item>
+                  <v-card>Notes</v-card>
+                </v-tab-item>
+                <v-tab-item>
+                  <v-card>Extras</v-card>
+                </v-tab-item>
               </v-tabs-items>
             </v-tabs>
           </v-flex>
