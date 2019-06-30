@@ -1,5 +1,6 @@
 <template>
   <v-container grid-list-md>
+    {{ test }}
     <v-layout row
       ><!-- Row 1 -->
       <v-flex shrink>
@@ -12,13 +13,16 @@
       </v-flex>
       <v-flex>
         <h3>Name: {{ character.name }}</h3>
-        <h4>{{ race.name }} {{ baseClass.name }} {{ level }}</h4>
-        <h5>Level: {{ character.level }}</h5>
+        <h4>
+          <span v-if="subRace.name != null">{{ subRace.name }} </span
+          >{{ race.name }} {{ baseClass.name }}
+        </h4>
+        <h5>Level: {{ levelTotal }}</h5>
       </v-flex>
     </v-layout>
     <v-layout row wrap
       ><!-- Row 2 -->
-      <v-flex xs12 tag="h2">
+      <v-flex xs12 tag="h1">
         Ability Scores
       </v-flex>
       <v-flex xs1 v-for="score in abilityScores" v-bind:key="score.name">
@@ -28,6 +32,7 @@
           <li>Mod: {{ score.mod }}</li>
           <li>Base Score: {{ score.baseScore }}</li>
           <li>Racial Bonus: {{ score.racialBonus }}</li>
+          <li>Sub Racial Bonus: {{ score.subRacialBonus }}</li>
           <li>Ability Improvements: {{ score.abilityImprovements }}</li>
           <li>Misc Bonus: {{ score.miscBonus }}</li>
           <li>Stacking Bonus: {{ score.stackingBonus }}</li>
@@ -40,7 +45,7 @@
         <h3>Proficiency Bonus: {{ proficiencyBonus }}</h3>
       </v-flex>
       <v-flex xs1>
-        <h3>Speed: {{ speed }}</h3>
+        <h3>Speed: {{ speed.walking }}</h3>
       </v-flex>
       <v-flex xs1>
         <h3>Inspiration: {{ this.character.inspiration }}</h3>
@@ -57,9 +62,9 @@
       <v-flex xs3>
         <v-layout column>
           <div>
-            <h2>
+            <h1>
               Saving Throws
-            </h2>
+            </h1>
             <v-layout row wrap>
               <v-flex
                 xs4
@@ -75,6 +80,11 @@
                 </ul>
               </v-flex>
             </v-layout>
+            <h3 v-for="mod in savingThrowMods" v-bind:key="mod.id">
+              <span>{{ mod.bonusType }}</span>
+              <span v-if="mod.bonusType == 'bonus'">{{ mod }}</span>
+              <span v-if="mod.conditional == true"> {{ mod.condition }}</span>
+            </h3>
           </div>
 
           <div>
@@ -143,7 +153,7 @@
       </v-flex>
       <v-flex xs3>
         <v-layout column>
-          <h2>Skills</h2>
+          <h1>Skills</h1>
           <ul>
             <li v-for="skill in skills" v-bind:key="skill.name">
               {{ skill.name }}
@@ -172,6 +182,21 @@
           </v-flex>
           <v-flex xs12>
             Big thingy where all actions and spells and stuff go
+
+            <h1>
+              Features and Traits
+            </h1>
+            <h2>
+              Racial Traits
+            </h2>
+            <div v-for="feature in race.features" v-bind:key="feature.name">
+              <h3>{{ feature.name }}</h3>
+              {{ feature.description }}
+            </div>
+            <div v-for="feature in subRace.features" v-bind:key="feature.name">
+              <h3>{{ feature.name }}</h3>
+              {{ feature.description }}
+            </div>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -181,282 +206,38 @@
 
 <script>
 //import axios from "axios";
+import hop from "../data/Hop.js";
+import halfling from "../data/Halfling.js";
+import lightfoot from "../data/Lightfoot.js";
+import skillsImport from "../data/skills.js";
 
 export default {
   name: "CharacterSheet",
   data() {
     return {
-      character: {
-        name: "Hop",
-        profilePicLink: "https://i.imgur.com/Xgp4a2Y.png",
-        baseClass: {
-          name: "Paladin",
-          levels: 10
-        },
-        hitPoints: {
-          currentHitPoints: 49,
-          maximumHitPoints: 74
-        },
-        inspiration: true,
-        abilityScores: {
-          miscBonus: [0, 0, 0, 0, 0, 0],
-          baseScores: [8, 10, 12, 13, 14, 15],
-          abilityImprovements: [0, 0, 0, 0, 0, 4], //This should be under class and be level specific to retain leveling history, it is not linked to total character level
-          strength: {
-            baseScore: 8,
-            abilityImprovements: 0
-          },
-          dexterity: {
-            baseScore: 10,
-            abilityImprovements: 0
-          },
-          constitution: {
-            baseScore: 12,
-            abilityImprovements: 0
-          },
-          intelligence: {
-            baseScore: 13,
-            abilityImprovements: 0
-          },
-          wisdom: {
-            baseScore: 14,
-            abilityImprovements: 0
-          },
-          charisma: {
-            baseScore: 15,
-            abilityImprovements: 0
-          }
-        },
-        savingThrows: {
-          saves: [
-            {
-              name: "Strength",
-              abbr: "STR",
-              override: null,
-              magicBonus: null,
-              miscBonus: null,
-              proficiencyLevel: 0
-            },
-            {
-              name: "Dexterity",
-              abbr: "DEX",
-              override: null,
-              magicBonus: null,
-              miscBonus: null,
-              proficiencyLevel: 0
-            },
-            {
-              name: "Constitution",
-              abbr: "CON",
-              override: null,
-              magicBonus: null,
-              miscBonus: null,
-              proficiencyLevel: 0
-            },
-            {
-              name: "Intelligence",
-              abbr: "INT",
-              override: null,
-              magicBonus: null,
-              miscBonus: null,
-              proficiencyLevel: 0
-            },
-            {
-              name: "Wisdom",
-              abbr: "WIS",
-              override: null,
-              magicBonus: null,
-              miscBonus: null,
-              proficiencyLevel: 2
-            },
-            {
-              name: "Charisma",
-              abbr: "CHA",
-              override: null,
-              magicBonus: null,
-              miscBonus: null,
-              proficiencyLevel: 2
-            }
-          ]
-        },
-        ProficienciesAndLanguages: {
-          armorProficiencies: [
-            {
-              name: "Heavy Armor"
-            },
-            {
-              name: "Light Armor"
-            },
-            {
-              name: "Medium Armor"
-            },
-            {
-              name: "Shields"
-            }
-          ],
-          weaponProficiencies: [
-            {
-              name: "Martial Weapons"
-            },
-            {
-              name: "Simple Weapons"
-            }
-          ],
-          toolProficiencies: [
-            {
-              name: "Thieves Tools"
-            }
-          ],
-          languages: [
-            {
-              name: "Common"
-            },
-            {
-              name: "Elvish"
-            },
-            {
-              name: "Halfling"
-            },
-            {
-              name: "Orc"
-            }
-          ]
-        }
-      },
-      race: {
-        name: "Halfling",
-        data: {
-          size: "Small",
-          speed: "25",
-          // abilityScoreBonus: [0, 2, 0, 0, 0, 0],
-          abilityScoreBonus: {
-            strength: 0,
-            dexterity: 2,
-            constitution: 0,
-            wisdom: 0,
-            intelligence: 0,
-            charisma: 0
-          }
-        }
-      },
+      test: null,
+      character: hop,
+      race: halfling,
+      subRace: lightfoot,
       baseClass: {
         name: "Paladin",
         level: 10
       },
-      skillsList: [
-        {
-          name: "Acrobatics",
-          stat: "DEX"
-        },
-        {
-          name: "Animal Handling",
-          stat: "WIS"
-        },
-        {
-          name: "Arcana",
-          stat: "INT"
-        },
-        {
-          name: "Athletics",
-          stat: "STR"
-        },
-        {
-          name: "Deception",
-          stat: "CHA"
-        },
-        {
-          name: "History",
-          stat: "INT"
-        },
-        {
-          name: "Insight",
-          stat: "WIS"
-        },
-        {
-          name: "Intimidation",
-          stat: "CHA"
-        },
-        {
-          name: "Investigation",
-          stat: "INT"
-        },
-        {
-          name: "Medicine",
-          stat: "WIS"
-        },
-        {
-          name: "Nature",
-          stat: "INT"
-        },
-        {
-          name: "Perception",
-          stat: "WIS"
-        },
-        {
-          name: "Performance",
-          stat: "CHA"
-        },
-        {
-          name: "Persuasion",
-          stat: "CHA"
-        },
-        {
-          name: "Religion",
-          stat: "INT"
-        },
-        {
-          name: "Sleight of Hand",
-          stat: "DEX"
-        },
-        {
-          name: "Stealth",
-          stat: "DEX"
-        },
-        {
-          name: "Survival",
-          stat: "WIS"
-        }
-      ],
-      abilityScoresList: [
-        {
-          name: "Strength",
-          abbr: "STR"
-        },
-        {
-          name: "Dexterity",
-          abbr: "DEX"
-        },
-        {
-          name: "Constitution",
-          abbr: "CON"
-        },
-        {
-          name: "Inteligence",
-          abbr: "INT"
-        },
-        {
-          name: "Wisdom",
-          abbr: "WIS"
-        },
-        {
-          name: "Charisma",
-          abbr: "CHA"
-        }
-      ]
+      skillsList: skillsImport
     };
   },
   methods: {
     calculateAbilityTotal: function(data) {
       var total = 0;
-      for (var i = 0; i < 7; i++) {
+      for (var i = 0; i < 8; i++) {
         total += Number(data[i]);
       }
 
       // Check to see if there's a value for override score
-      if (data[7] == null) {
+      if (data[8] == null) {
         return total;
       } else {
-        return data[7];
+        return data[8];
       }
     },
     calculateAbilityMod: function(values) {
@@ -470,12 +251,13 @@ export default {
         mod: this.calculateAbilityMod(data),
         baseScore: data[0],
         racialBonus: data[1],
-        abilityImprovements: data[2],
-        miscBonus: data[3],
-        stackingBonus: data[4],
-        setScore: data[5],
-        otherModifier: data[6],
-        overrideScore: data[7]
+        subRacialBonus: data[2],
+        abilityImprovements: data[3],
+        miscBonus: data[4],
+        stackingBonus: data[5],
+        setScore: data[6],
+        otherModifier: data[7],
+        overrideScore: data[8]
       };
       // Data should be an array with values in the following order
       //   Base score, racial bonus, ability improvements,
@@ -487,7 +269,8 @@ export default {
     strength: function() {
       return this.calculateAbilityScore("Strength", "STR", [
         this.character.abilityScores.strength.baseScore,
-        this.race.data.abilityScoreBonus.strength,
+        this.race.abilityScoreBonus.strength,
+        this.subRace.abilityScoreBonus.strength,
         this.character.abilityScores.strength.abilityImprovements,
         0, // Misc bonus
         0, // Stacking bonus
@@ -500,7 +283,8 @@ export default {
     dexterity: function() {
       return this.calculateAbilityScore("Dexterity", "DEX", [
         this.character.abilityScores.dexterity.baseScore,
-        this.race.data.abilityScoreBonus.dexterity,
+        this.race.abilityScoreBonus.dexterity,
+        this.subRace.abilityScoreBonus.dexterity,
         this.character.abilityScores.dexterity.abilityImprovements,
         0, // Misc bonus
         0, // Stacking bonus
@@ -513,7 +297,8 @@ export default {
     constitution: function() {
       return this.calculateAbilityScore("Constitution", "CON", [
         this.character.abilityScores.constitution.baseScore,
-        this.race.data.abilityScoreBonus.constitution,
+        this.race.abilityScoreBonus.constitution,
+        this.subRace.abilityScoreBonus.constitution,
         this.character.abilityScores.constitution.abilityImprovements,
         0, // Misc bonus
         0, // Stacking bonus
@@ -526,7 +311,8 @@ export default {
     intelligence: function() {
       return this.calculateAbilityScore("Intelligence", "INT", [
         this.character.abilityScores.intelligence.baseScore,
-        this.race.data.abilityScoreBonus.intelligence,
+        this.race.abilityScoreBonus.intelligence,
+        this.subRace.abilityScoreBonus.intelligence,
         this.character.abilityScores.intelligence.abilityImprovements,
         0, // Misc bonus
         0, // Stacking bonus
@@ -539,7 +325,8 @@ export default {
     wisdom: function() {
       return this.calculateAbilityScore("Wisdom", "WIS", [
         this.character.abilityScores.wisdom.baseScore,
-        this.race.data.abilityScoreBonus.wisdom,
+        this.race.abilityScoreBonus.wisdom,
+        this.subRace.abilityScoreBonus.wisdom,
         this.character.abilityScores.wisdom.abilityImprovements,
         0, // Misc bonus
         0, // Stacking bonus
@@ -552,7 +339,8 @@ export default {
     charisma: function() {
       return this.calculateAbilityScore("Charisma", "CHA", [
         this.character.abilityScores.charisma.baseScore,
-        this.race.data.abilityScoreBonus.charisma,
+        this.race.abilityScoreBonus.charisma,
+        this.subRace.abilityScoreBonus.charisma,
         this.character.abilityScores.charisma.abilityImprovements,
         0, // Misc bonus
         0, // Stacking bonus
@@ -603,7 +391,7 @@ export default {
     },
     speed: function() {
       // Needs to account for class features, status effects, etc.
-      return this.race.data.speed;
+      return this.race.speed;
     },
     initiative: function() {
       return this.dexterity.mod;
@@ -621,6 +409,37 @@ export default {
       // ability: Base AC = 10 + Dexterity modifier + Constitution modifier
       // Monk Unarmoured Defense ability: Base AC = 10 + Dexterity modifier + Wisdom modifier
       // Sorcerer Draconic Resilience ability: Base AC = 13 + Dexterity modifier
+    },
+    mods: function() {
+      var mods = [];
+
+      // Add mods from racial features
+      for (var i = 0; i < this.race.features.length; i++) {
+        for (var j = 0; j < this.race.features[i].mods.length; j++) {
+          mods.push(this.race.features[i].mods[j]);
+        }
+      }
+
+      // Add mods from sub racial features
+      for (var k = 0; k < this.subRace.features.length; k++) {
+        for (var l = 0; l < this.subRace.features[k].mods.length; l++) {
+          mods.push(this.subRace.features[k].mods[l]);
+        }
+      }
+
+      return mods;
+    },
+    savingThrowMods: function() {
+      // Finds all saving throw mods and places into one array
+      var savingMods = [];
+
+      for (var i = 0; i < this.mods.length; i++) {
+        if (this.mods[i].type == "Saving Throw") {
+          savingMods.push(this.mods[i]);
+        }
+      }
+
+      return savingMods;
     }
   }
 };
