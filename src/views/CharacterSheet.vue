@@ -154,19 +154,9 @@
       <v-flex xs3>
         <v-layout column>
           <h1>Skills</h1>
-          <ul>
-            <li v-for="skill in skills" v-bind:key="skill.name">
-              {{ skill.name }}
-              <ul>
-                <li>
-                  {{ skill.stat }}
-                </li>
-                <li>
-                  {{ skill.mod }}
-                </li>
-              </ul>
-            </li>
-          </ul>
+          <div v-for="skill in skills" v-bind:key="skill.name">
+            {{ skill.stat }} {{ skill.name }} {{ skill.mod }}
+          </div>
         </v-layout>
       </v-flex>
       <v-flex xs6>
