@@ -10,6 +10,7 @@ var background = {
       proficiencyLevel: 2
     }
   ],
+  // Still need to add languages that are selectable by choices
   features: [
     {
       name: "Researcher",
