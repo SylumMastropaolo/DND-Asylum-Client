@@ -193,29 +193,19 @@
                     </h2>
                     <v-divider></v-divider>
                     <div
-                      v-for="feature in baseClass.features"
+                      v-for="feature in classFeatures"
                       v-bind:key="feature.name"
-                      >
-                      <h3>{{ feature.name}}</h3>
+                    >
+                      <h3>{{ feature.name }}</h3>
                       {{ feature.description }}
                     </div>
                     <h2>
                       Racial Traits
                     </h2>
                     <v-divider></v-divider>
-                    <div
-                      v-for="feature in race.features"
-                      v-bind:key="feature.name"
-                    >
-                      <h3>{{ feature.name }}</h3>
-                      {{ feature.description }}
-                    </div>
-                    <div
-                      v-for="feature in subRace.features"
-                      v-bind:key="feature.name"
-                    >
-                      <h3>{{ feature.name }}</h3>
-                      {{ feature.description }}
+                    <div v-for="trait in racialTraits" v-bind:key="trait.name">
+                      <h3>{{ trait.name }}</h3>
+                      {{ trait.description }}
                     </div>
                   </v-card>
                 </v-tab-item>
@@ -481,6 +471,34 @@ export default {
       }
 
       return savingMods;
+    },
+    racialTraits: function() {
+      var racials = [];
+
+      for (var i = 0; i < this.race.features.length; i++) {
+        racials.push(this.race.features[i]);
+      }
+      if (this.subRace != null) {
+        for (var j = 0; i < this.subRace.features.length; i++) {
+          racials.push(this.race.features[j]);
+        }
+      }
+
+      return racials;
+    },
+    classFeatures: function() {
+      var features = [];
+
+      for (var i = 0; i < this.baseClass.features.length; i++) {
+        if (
+          this.baseClass.features[i].levelRequirement <=
+          this.character.baseClass.levels
+        ) {
+          features.push(this.baseClass.features[i]);
+        }
+      }
+
+      return features;
     }
   }
 };
