@@ -16,6 +16,40 @@ var paladin = {
         shortRestReset: false,
         longRestReset: true
       }
+    },
+    {
+      name: "Lay on Hands",
+      id: 6,
+      levelRequirement: 1,
+      source: "Class",
+      description:
+        "Your blessed touch can heal wounds. You have a pool of healing power that replenishes when you take a long rest. With that pool, you can restore a total number of hit points equal to your paladin level × 5. As an action, you can touch a creature and draw power from the pool to restore a number of hit points to that creature, up to the maximum amount remaining in your pool. Alternatively, you can expend 5 hit points from your pool of healing to cure the target of one disease or neutralize one poison affecting it. You can cure multiple diseases and neutralize multiple poisons with a single use of Lay on Hands, expending hit points separately for each one. This feature has no effect on undead and constructs.",
+      mods: [],
+      uses: {
+        // Need to make this reactive, probably won't work till I make
+        // a language processor that I was planning on using for rolls
+        amount: 5,
+        shortRestReset: false,
+        longRestReset: true
+      }
+    },
+    {
+      name: "Fighting Style",
+      // This class feature requires the player to make a choice to determine
+      // what bonuses the character gets. I should tackle this issue soon
+      id: 7,
+      levelRequirement: 2,
+      source: "Class",
+      description:
+        "At 2nd level, you adopt a style of fighting as your specialty. Choose one of the following options. You can’t take a Fighting Style option more than once, even if you later get to choose again.",
+      mods: [],
+      uses: {
+        // Need to make this reactive, probably won't work till I make
+        // a language processor that I was planning on using for rolls
+        amount: null,
+        shortRestReset: false,
+        longRestReset: false
+      }
     }
   ]
 };
