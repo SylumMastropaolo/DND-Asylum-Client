@@ -185,28 +185,32 @@
                 </v-tab-item>
                 <v-tab-item>
                   <v-card>
-                    <h1>
-                      Features and Traits
-                    </h1>
-                    <h2>
-                      Class Features
-                    </h2>
-                    <v-divider></v-divider>
-                    <div
-                      v-for="feature in classFeatures"
-                      v-bind:key="feature.name"
-                    >
-                      <h3>{{ feature.name }}</h3>
-                      {{ feature.description }}
-                    </div>
-                    <h2>
-                      Racial Traits
-                    </h2>
-                    <v-divider></v-divider>
-                    <div v-for="trait in racialTraits" v-bind:key="trait.name">
-                      <h3>{{ trait.name }}</h3>
-                      {{ trait.description }}
-                    </div>
+                    <v-container grid-list-sm>
+                      <v-layout column>
+                        <h2>
+                          Class Features
+                        </h2>
+                        <v-divider></v-divider>
+                        <v-flex
+                          v-for="feature in classFeatures"
+                          v-bind:key="feature.name"
+                        >
+                          <h3>{{ feature.name }}</h3>
+                          {{ feature.description }}
+                        </v-flex>
+                        <h2>
+                          Racial Traits
+                        </h2>
+                        <v-divider></v-divider>
+                        <div
+                          v-for="trait in racialTraits"
+                          v-bind:key="trait.name"
+                        >
+                          <h3>{{ trait.name }}</h3>
+                          {{ trait.description }}
+                        </div>
+                      </v-layout>
+                    </v-container>
                   </v-card>
                 </v-tab-item>
                 <v-tab-item>
