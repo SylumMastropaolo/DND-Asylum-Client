@@ -484,7 +484,7 @@ export default {
       }
       if (this.subRace != null) {
         for (var j = 0; j < this.subRace.features.length; j++) {
-          racials.push(this.race.features[j]);
+          racials.push(this.subRace.features[j]);
         }
       }
 
