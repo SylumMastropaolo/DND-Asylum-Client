@@ -189,6 +189,17 @@
                       Features and Traits
                     </h1>
                     <h2>
+                      Class Features
+                    </h2>
+                    <v-divider></v-divider>
+                    <div
+                      v-for="feature in baseClass.features"
+                      v-bind:key="feature.name"
+                      >
+                      <h3>{{ feature.name}}</h3>
+                      {{ feature.description }}
+                    </div>
+                    <h2>
                       Racial Traits
                     </h2>
                     <v-divider></v-divider>
@@ -232,6 +243,7 @@ import hop from "../data/Hop.js";
 import halfling from "../data/Halfling.js";
 import lightfoot from "../data/Lightfoot.js";
 import skillsImport from "../data/skills.js";
+import paladin from "../data/Paladin.js";
 
 export default {
   name: "CharacterSheet",
@@ -241,10 +253,7 @@ export default {
       character: hop,
       race: halfling,
       subRace: lightfoot,
-      baseClass: {
-        name: "Paladin",
-        level: 10
-      },
+      baseClass: paladin,
       skillsList: skillsImport,
       activeTab: 3,
       tabs: [
