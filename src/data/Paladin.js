@@ -1,5 +1,44 @@
 var paladin = {
   name: "Paladin",
+  hitDice: "1d10",
+  savingThrows: [
+    {
+      type: "Saving Throw",
+      name: "Wisdom",
+      proficiencyLevel: 2
+    },
+    {
+      type: "Saving Throw",
+      name: "Charisma",
+      proficiencyLevel: 2
+    }
+  ],
+  proficiencies: [
+    {
+      type: "Armor",
+      name: "Heavy Armor"
+    },
+    {
+      type: "Armor",
+      name: "Medium Armor"
+    },
+    {
+      type: "Armor",
+      name: "Light Armor"
+    },
+    {
+      type: "Armor",
+      name: "Shields"
+    },
+    {
+      type: "Weapon",
+      name: "Simple Weapons"
+    },
+    {
+      type: "Weapon",
+      name: "Martial Weapons"
+    }
+  ],
   features: [
     {
       name: "Divine Sense",
@@ -50,6 +89,11 @@ var paladin = {
         shortRestReset: false,
         longRestReset: false
       }
+    }
+  ],
+  choices: [
+    {
+      test: ""
     }
   ]
 };
