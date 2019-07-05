@@ -1,5 +1,17 @@
 var background = {
   name: "Sage",
+  proficiencies: [
+    {
+      type: "Skill",
+      name: "Arcana",
+      proficiencyLevel: 2
+    },
+    {
+      type: "Skill",
+      name: "History",
+      proficiencyLevel: 2
+    }
+  ],
   skillProficiencies: [
     {
       name: "Arcana",
