@@ -5,7 +5,8 @@ var character = {
   subRace: "Lightfoot",
   baseClass: {
     name: "Paladin",
-    levels: 10
+    levels: 10,
+    options: [[1, 3]]
   },
   hitPoints: {
     currentHitPoints: 49,
@@ -49,7 +50,7 @@ var character = {
         override: null,
         magicBonus: null,
         miscBonus: null,
-        proficiencyLevel: 0
+        proficiencyLevelOverride: null
       },
       {
         name: "Dexterity",
@@ -57,7 +58,7 @@ var character = {
         override: null,
         magicBonus: null,
         miscBonus: null,
-        proficiencyLevel: 0
+        proficiencyLevelOverride: null
       },
       {
         name: "Constitution",
@@ -65,7 +66,7 @@ var character = {
         override: null,
         magicBonus: null,
         miscBonus: null,
-        proficiencyLevel: 0
+        proficiencyLevelOverride: null
       },
       {
         name: "Intelligence",
@@ -73,7 +74,7 @@ var character = {
         override: null,
         magicBonus: null,
         miscBonus: null,
-        proficiencyLevel: 0
+        proficiencyLevelOverride: null
       },
       {
         name: "Wisdom",
@@ -81,7 +82,7 @@ var character = {
         override: null,
         magicBonus: null,
         miscBonus: null,
-        proficiencyLevel: 2
+        proficiencyLevelOverride: null
       },
       {
         name: "Charisma",
@@ -89,7 +90,7 @@ var character = {
         override: null,
         magicBonus: null,
         miscBonus: null,
-        proficiencyLevel: 2
+        proficiencyLevelOverride: null
       }
     ]
   },

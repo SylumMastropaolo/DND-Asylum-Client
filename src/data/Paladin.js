@@ -91,9 +91,53 @@ var paladin = {
       }
     }
   ],
-  choices: [
+  options: [
     {
-      test: ""
+      name: "Proficiencies",
+      description: null,
+
+      // In the class path, this variable tracks which choice to look at.
+      choiceId: 0,
+
+      // How many items you can choose
+      choose: 2,
+
+      // What to choose from
+      choices: [
+        {
+          type: "Skill",
+          name: "Athletics",
+          proficiencyLevel: 2
+        },
+        {
+          type: "Skill",
+          name: "Insight",
+          proficiencyLevel: 2
+        },
+        {
+          type: "Skill",
+          name: "Intimidation",
+          proficiencyLevel: 2
+        },
+        {
+          type: "Skill",
+          name: "Medicine",
+          proficiencyLevel: 2
+        },
+        {
+          type: "Skill",
+          name: "Persuasion",
+          proficiencyLevel: 2
+        },
+        {
+          type: "Skill",
+          name: "Religion",
+          proficiencyLevel: 2
+        }
+      ]
+    },
+    {
+      name: ""
     }
   ]
 };
