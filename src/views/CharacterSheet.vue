@@ -156,6 +156,9 @@
           <h1>Skills</h1>
           <div v-for="skill in skills" v-bind:key="skill.name">
             <h3>
+              <v-icon v-if="skill.proficiency == 3">
+                stars
+              </v-icon>
               <v-icon v-if="skill.proficiency == 2">
                 star
               </v-icon>
@@ -447,6 +450,9 @@ export default {
         for (var j = 0; j < this.abilityScores.length; j++) {
           if (this.skillsList[i].stat == this.abilityScores[j].abbr) {
             mod = Number(this.abilityScores[j].mod);
+            if (proficiency == 3) {
+              mod = mod + (this.proficiencyBonus * 2);
+            }
             if (proficiency == 2) {
               mod = mod + this.proficiencyBonus;
             }
