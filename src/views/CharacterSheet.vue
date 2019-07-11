@@ -155,7 +155,19 @@
         <v-layout column>
           <h1>Skills</h1>
           <div v-for="skill in skills" v-bind:key="skill.name">
-            {{ skill.stat }} {{ skill.name }} {{ skill.mod }}
+            <h3>
+              <v-icon v-if="skill.proficiency == 2">
+                star
+              </v-icon>
+              <v-icon v-if="skill.proficiency == 1">
+                star_half
+              </v-icon>
+              <v-icon v-if="skill.proficiency == 0">
+                star_border
+              </v-icon>
+              {{ skill.proficiency }} {{ skill.stat }} {{ skill.name }}
+              {{ skill.mod }}
+            </h3>
           </div>
         </v-layout>
       </v-flex>
@@ -407,21 +419,48 @@ export default {
     },
     skills: function() {
       // Need to change this so it checks for proficiencies
+      //   Currently only checks baseclass as a source for proficiency
       var skills = [];
       for (var i = 0; i < this.skillsList.length; i++) {
         var name = this.skillsList[i].name;
         var stat = this.skillsList[i].stat;
+        var proficiency = 0;
         var mod;
+
+        for (
+          var k = 0;
+          k < this.character.baseClass.skillProficiencyChoices.length;
+          k++
+        ) {
+          if (
+            this.skillsList[i].name ==
+            this.baseClass.skillProficiencies.options[
+              this.character.baseClass.skillProficiencyChoices[k]
+            ].name
+          ) {
+            proficiency = this.baseClass.skillProficiencies.options[
+              this.character.baseClass.skillProficiencyChoices[k]
+            ].proficiencyLevel;
+          }
+        }
+
         for (var j = 0; j < this.abilityScores.length; j++) {
           if (this.skillsList[i].stat == this.abilityScores[j].abbr) {
             mod = Number(this.abilityScores[j].mod);
+            if (proficiency == 2) {
+              mod = mod + this.proficiencyBonus;
+            }
+            if (proficiency == 1) {
+              mod = mod + Math.floor(this.proficiencyBonus / 2);
+            }
           }
         }
 
         var skill = {
           name: name,
           stat: stat,
-          mod: mod
+          mod: mod,
+          proficiency: proficiency
         };
         skills.push(skill);
       }
