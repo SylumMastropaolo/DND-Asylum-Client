@@ -168,8 +168,7 @@
               <v-icon v-if="skill.proficiency == 0">
                 star_border
               </v-icon>
-              {{ skill.proficiency }} {{ skill.stat }} {{ skill.name }}
-              {{ skill.mod }}
+              {{ skill.stat }} {{ skill.name }} {{ skill.mod }}
             </h3>
           </div>
         </v-layout>
@@ -451,7 +450,7 @@ export default {
           if (this.skillsList[i].stat == this.abilityScores[j].abbr) {
             mod = Number(this.abilityScores[j].mod);
             if (proficiency == 3) {
-              mod = mod + (this.proficiencyBonus * 2);
+              mod = mod + this.proficiencyBonus * 2;
             }
             if (proficiency == 2) {
               mod = mod + this.proficiencyBonus;
