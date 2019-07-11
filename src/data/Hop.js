@@ -6,7 +6,8 @@ var character = {
   baseClass: {
     name: "Paladin",
     levels: 10,
-    options: [[1, 3]]
+    skillProficiencyChoices: [3, 1],
+    options: [1]
   },
   hitPoints: {
     currentHitPoints: 49,

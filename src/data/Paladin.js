@@ -39,6 +39,41 @@ var paladin = {
       name: "Martial Weapons"
     }
   ],
+  skillProficiencies: {
+    choices: 2,
+    options: [
+      {
+        type: "Skill",
+        name: "Athletics",
+        proficiencyLevel: 2
+      },
+      {
+        type: "Skill",
+        name: "Insight",
+        proficiencyLevel: 2
+      },
+      {
+        type: "Skill",
+        name: "Intimidation",
+        proficiencyLevel: 2
+      },
+      {
+        type: "Skill",
+        name: "Medicine",
+        proficiencyLevel: 2
+      },
+      {
+        type: "Skill",
+        name: "Persuasion",
+        proficiencyLevel: 2
+      },
+      {
+        type: "Skill",
+        name: "Religion",
+        proficiencyLevel: 2
+      }
+    ]
+  },
   features: [
     {
       name: "Divine Sense",
@@ -88,56 +123,30 @@ var paladin = {
         amount: null,
         shortRestReset: false,
         longRestReset: false
-      }
-    }
-  ],
-  options: [
-    {
-      name: "Proficiencies",
-      description: null,
-
-      // In the class path, this variable tracks which choice to look at.
-      choiceId: 0,
-
-      // How many items you can choose
-      choose: 2,
-
-      // What to choose from
-      choices: [
+      },
+      choiceID: 0,
+      choices: 1,
+      options: [
         {
-          type: "Skill",
-          name: "Athletics",
-          proficiencyLevel: 2
+          name: "Defense",
+          description: "While you are wearing armor, you gain a +1 bonus to AC."
         },
         {
-          type: "Skill",
-          name: "Insight",
-          proficiencyLevel: 2
+          name: "Dueling",
+          description:
+            "When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon."
         },
         {
-          type: "Skill",
-          name: "Intimidation",
-          proficiencyLevel: 2
+          name: "Great Weapon Fighting",
+          description:
+            "When you roll a 1 or 2 on a damage die for an attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll. The weapon must have the two-handed or versatile property for you to gain this benefit."
         },
         {
-          type: "Skill",
-          name: "Medicine",
-          proficiencyLevel: 2
-        },
-        {
-          type: "Skill",
-          name: "Persuasion",
-          proficiencyLevel: 2
-        },
-        {
-          type: "Skill",
-          name: "Religion",
-          proficiencyLevel: 2
+          name: "Protection",
+          description:
+            "When a creature that you can see attacks a target other than you that is within 5 feet of you, you can use your reaction to impose disadvantage on the attack roll. You must be wielding a shield."
         }
       ]
-    },
-    {
-      name: ""
     }
   ]
 };

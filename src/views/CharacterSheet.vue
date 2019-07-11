@@ -197,6 +197,16 @@
                         >
                           <h3>{{ feature.name }}</h3>
                           {{ feature.description }}
+                          <div
+                            v-if="feature.choiceID != undefined"
+                            style="margin-left: 20px"
+                          >
+                            {{
+                              feature.options[
+                                character.baseClass.options[feature.choiceID]
+                              ].name
+                            }}
+                          </div>
                         </v-flex>
                         <h2>
                           Racial Traits
@@ -396,6 +406,7 @@ export default {
       ];
     },
     skills: function() {
+      // Need to change this so it checks for proficiencies
       var skills = [];
       for (var i = 0; i < this.skillsList.length; i++) {
         var name = this.skillsList[i].name;
